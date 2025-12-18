@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+
+{% block title %}داشبورد ادمین{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>داشبورد مدیریت</h2>
+    <div>
+        <a href="{% url 'user_management' %}" class="btn btn-primary me-2">
+            <i class="bi bi-people"></i> مدیریت کاربران
+        </a>
+        <a href="{% url 'send_message' %}" class="btn btn-success">
+            <i class="bi bi-envelope-plus"></i> ارسال پیام جدید
+        </a>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">کل کاربران</h5>
+                <h2>{{ user_stats.total }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">کاربران عادی</h5>
+                <h2>{{ user_stats.normal }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">کارگران</h5>
+                <h2>{{ user_stats.worker }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">کارمندان</h5>
+                <h2>{{ user_stats.employee }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <h4 class="card-title">پیام‌های کاربران</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>کاربر</th>
+                        <th>موضوع</th>
+                        <th>پیام</th>
+                        <th>تاریخ</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in contact_messages %}
+                    <tr>
+                        <td>{{ message.user.get_full_name }}</td>
+                        <td>{{ message.subject }}</td>
+                        <td>{{ message.message|truncatechars:50 }}</td>
+                        <td>{{ message.created_at|to_jalali }}</td>
+                        <td>
+                            {% if message.status == 'pending' %}
+                                <span class="badge bg-warning">در انتظار</span>
+                            {% elif message.status == 'read' %}
+                                <span class="badge bg-info">خوانده شده</span>
+                            {% else %}
+                                <span class="badge bg-success">پاسخ داده شده</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'respond_message' message.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-reply"></i> پاسخ
+                                    </a>
+                                    {% if message.admin_response %}
+
+                                    {% endif %}
+                                </div>
+                            </td>
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">هیچ پیامی یافت نشد</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if contact_messages.has_other_pages %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if contact_messages.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contact_messages.previous_page_number }}">قبلی</a>
+                </li>
+                {% endif %}
+                
+                {% for num in contact_messages.paginator.page_range %}
+                <li class="page-item {% if contact_messages.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                
+                {% if contact_messages.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contact_messages.next_page_number }}">بعدی</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

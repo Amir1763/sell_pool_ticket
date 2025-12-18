@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+
+{% block title %}مشاهده پیام{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">مشاهده پیام</h5>
+                <div>
+                    <span class="badge bg-light text-dark">
+                        وضعیت: {{ message.get_status_display }}
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong><i class="bi bi-person"></i> فرستنده:</strong>
+                        <p>{{ message.user.get_full_name }} ({{ message.user.email }})</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong><i class="bi bi-calendar"></i> تاریخ ارسال:</strong>
+                        <p>{{ message.created_at|to_jalali }}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong><i class="bi bi-chat-text"></i> موضوع:</strong>
+                    <p class="h5 text-primary">{{ message.subject }}</p>
+                </div>
+                
+                <div class="mb-4">
+                    <strong><i class="bi bi-envelope"></i> پیام:</strong>
+                    <div class="border p-4 bg-light rounded mt-2">
+                        {{ message.message|linebreaks }}
+                    </div>
+                </div>
+                
+                {% if message.admin_response %}
+                <div class="mb-3">
+                    <strong><i class="bi bi-reply"></i> پاسخ ادمین:</strong>
+                    <div class="border p-4 bg-success bg-opacity-10 rounded mt-2">
+                        {{ message.admin_response|linebreaks }}
+                        <hr>
+                        <small class="text-muted">
+                            <i class="bi bi-clock"></i> 
+                            پاسخ داده شده در: {{ message.responded_at|to_jalali }}
+                        </small>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-right"></i> بازگشت به داشبورد
+                    </a>
+                    
+                    {% if not message.admin_response %}
+                    <a href="{% url 'respond_message' message.id %}" class="btn btn-success">
+                        <i class="bi bi-reply"></i> پاسخ به این پیام
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+
+{% block title %}مشاهده پیام{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header {% if message.is_from_admin %}bg-danger text-white{% else %}bg-primary text-white{% endif %}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        {% if message.is_from_admin %}
+                        <i class="bi bi-shield-check"></i> پیام از طرف ادمین
+                        {% else %}
+                        <i class="bi bi-person"></i> پیام از طرف شما
+                        {% endif %}
+                    </h5>
+                    <div>
+                        <span class="badge {% if message.is_read %}bg-light text-dark{% else %}bg-warning{% endif %}">
+                            {% if message.is_read %}خوانده شده{% else %}جدید{% endif %}
+                        </span>
+                        {% if message.contact_message %}
+                        <span class="badge bg-info">پیام تماس</span>
+                        {% elif message.message_type == 'private' %}
+                        <span class="badge bg-warning">پیام خصوصی</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <strong><i class="bi bi-person"></i> 
+                            {% if message.is_from_admin %}فرستنده{% else %}گیرنده{% endif %}:
+                        </strong>
+                        <p>
+                            {% if message.is_from_admin %}
+                            <span class="badge bg-danger">ادمین سیستم</span>
+                            {% else %}
+                            {{ message.user.get_full_name }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong><i class="bi bi-calendar"></i> تاریخ:</strong>
+                        <p>{{ message.created_at|to_jalali }}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <strong><i class="bi bi-chat-text"></i> موضوع:</strong>
+                    <h4 class="text-primary mt-2">{{ message.subject }}</h4>
+                </div>
+                
+                <div class="mb-4">
+                    <strong><i class="bi bi-envelope"></i> متن پیام:</strong>
+                    <div class="border p-4 rounded mt-2 {% if message.is_from_admin %}bg-danger bg-opacity-10{% else %}bg-primary bg-opacity-10{% endif %}">
+                        {{ message.content|linebreaks }}
+                    </div>
+                </div>
+                
+                <!-- اگر پیام مربوط به تماس است، پیام اصلی را نشان بده -->
+                {% if message.contact_message and original_message %}
+                <div class="card mt-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">پیام اصلی شما:</h6>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>موضوع:</strong> {{ message.contact_message.subject }}</p>
+                        <p><strong>پیام:</strong></p>
+                        <div class="border p-3 bg-light rounded">
+                            {{ message.contact_message.message|linebreaks }}
+                        </div>
+                        <small class="text-muted">
+                            ارسال شده در: {{ message.contact_message.created_at|to_jalali }}
+                        </small>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- مکالمه کامل -->
+                {% if conversation_messages and conversation_messages|length > 1 %}
+                <div class="mt-5">
+                    <h5 class="mb-3"><i class="bi bi-chat-left-text"></i> مکالمه کامل</h5>
+                    
+                    <div class="conversation-container">
+                        {% for msg in conversation_messages %}
+                        <div class="message-item mb-3 {% if msg.is_from_admin %}text-end{% endif %}">
+                            <div class="card {% if msg.is_from_admin %}border-success bg-success bg-opacity-10{% else %}border-primary bg-primary bg-opacity-10{% endif %}">
+                                <div class="card-body">
+                                    <p class="card-text">{{ msg.content|linebreaks }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            {% if msg.is_from_admin %}
+                                            <span class="badge bg-success">ادمین</span>
+                                            {% else %}
+                                            <span class="badge bg-primary">شما</span>
+                                            {% endif %}
+                                        </small>
+                                        <small class="text-muted">{{ msg.created_at|to_jalali }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- دکمه‌های عملیات -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'my_messages' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-right"></i> بازگشت به لیست پیام‌ها
+                    </a>
+                    
+                    {% if not message.is_from_admin %}
+                    <a href="{% url 'contact' %}" class="btn btn-primary">
+                        <i class="bi bi-reply"></i> ارسال پیام جدید
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .conversation-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+    }
+    
+    .message-item .card {
+        max-width: 80%;
+    }
+    
+    .message-item.text-end .card {
+        margin-left: auto;
+    }
+    
+    .message-item:not(.text-end) .card {
+        margin-right: auto;
+    }
+</style>
+{% endblock %}

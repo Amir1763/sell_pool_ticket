@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}تغییر نوع کاربر{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0"><i class="bi bi-pencil"></i> تغییر نوع کاربر</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    در حال تغییر نوع کاربر برای <strong>{{ target_user.get_full_name }}</strong>
+                    <br>
+                    نوع فعلی: <span class="badge bg-info">{{ target_user.get_user_type_display }}</span>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>خطا!</strong> لطفا موارد زیر را اصلاح کنید:
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.user_type.id_for_label }}" class="form-label">نوع کاربر جدید:</label>
+                        {{ form.user_type }}
+                        <div class="form-text">
+                            <strong>توضیح انواع کاربر:</strong>
+                            <ul class="mb-0">
+                                <li><span class="badge bg-success">کاربر عادی</span>: دسترسی‌های پایه</li>
+                                <li><span class="badge bg-warning">کارگر</span>: دسترسی به برخی امکانات ویژه</li>
+                                <li><span class="badge bg-danger">کارمند</span>: دسترسی کامل به امکانات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'user_detail' target_user.id %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-right"></i> بازگشت
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save"></i> ذخیره تغییرات
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

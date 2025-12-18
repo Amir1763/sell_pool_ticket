@@ -1,0 +1,234 @@
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/contact/ HTTP/1.1" 200 8458
+"GET /captcha/image/aff271aa8315ec2d221d3cdf014bc6f3ec4b99e8/ HTTP/1.1" 200 3499
+"GET / HTTP/1.1" 200 7186
+"GET /accounts/logout/ HTTP/1.1" 302 0
+"GET /accounts/login/ HTTP/1.1" 200 6920
+"GET /captcha/image/f9ec1ddf7aac77e64bcdc6888fac49086310d5b6/ HTTP/1.1" 200 3763
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/ HTTP/1.1" 302 0
+"GET /accounts/login/ HTTP/1.1" 200 6605
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4342
+"GET /static/admin/css/login.css HTTP/1.1" 304 0
+"GET /captcha/image/c7fe7e4c14b8d466b4961fa483590d810860fed5/ HTTP/1.1" 200 4007
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7505
+"GET /accounts/dashboard/ HTTP/1.1" 200 8828
+"GET /accounts/admin/users/ HTTP/1.1" 200 17886
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/admin/users/1/ HTTP/1.1" 200 15926
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/profile/ HTTP/1.1" 200 16376
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"POST /accounts/profile/ HTTP/1.1" 200 17452
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+Not Found: /media/ezgif.com-gif-maker-67.webp
+"GET /media/ezgif.com-gif-maker-67.webp HTTP/1.1" 404 3168
+"POST /accounts/profile/ HTTP/1.1" 302 0
+"GET /accounts/profile/ HTTP/1.1" 200 17118
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /media/documents/owyyu23o.jpg HTTP/1.1" 200 53655
+"GET /accounts/dashboard/ HTTP/1.1" 200 8828
+"GET /accounts/admin/users/ HTTP/1.1" 200 18546
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+"GET /accounts/admin/users/2/download-document/ HTTP/1.1" 200 53655
+"GET /accounts/admin/users/1/update-type/ HTTP/1.1" 200 8175
+"POST /accounts/admin/users/1/update-type/ HTTP/1.1" 302 0
+"GET /accounts/admin/users/ HTTP/1.1" 200 18894
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/dashboard/ HTTP/1.1" 200 8828
+"GET /accounts/logout/ HTTP/1.1" 302 0
+"GET /accounts/login/ HTTP/1.1" 200 6920
+"GET /captcha/image/54e189b78b672fd52c8dc9117bc10b31cf50438e/ HTTP/1.1" 200 3923
+"POST /accounts/login/ HTTP/1.1" 200 6769
+"GET /captcha/image/d78efe6ad6d23d03da7798dd2ec70629c5847754/ HTTP/1.1" 200 4312
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7240
+"GET /accounts/messages/ HTTP/1.1" 200 18440
+"GET /accounts/messages/1/ HTTP/1.1" 200 8553
+"GET /accounts/messages/ HTTP/1.1" 200 18440
+"GET /accounts/messages/1/ HTTP/1.1" 200 8553
+"GET /accounts/messages/ HTTP/1.1" 200 18440
+"GET /accounts/messages/1/ HTTP/1.1" 200 8553
+"GET /accounts/messages/ HTTP/1.1" 200 18440
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+"POST /admin/login/?next=/admin/ HTTP/1.1" 403 2516
+"GET /accounts/logout/ HTTP/1.1" 302 0
+"GET /accounts/login/ HTTP/1.1" 200 6920
+"GET /captcha/image/626cc0557e813179fb13f69e8adc339fb29bb3ea/ HTTP/1.1" 200 3428
+"POST /accounts/login/ HTTP/1.1" 200 6860
+"GET /captcha/image/7398ac2b6d1095e77f3aa75d610eb41ba42d2de4/ HTTP/1.1" 200 4379
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7505
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/dashboard/ HTTP/1.1" 200 8828
+"GET /accounts/respond/1/ HTTP/1.1" 200 9289
+"GET /accounts/dashboard/ HTTP/1.1" 200 8828
+"GET /admin/ HTTP/1.1" 200 9712
+"GET /admin/accounts/usermessage/ HTTP/1.1" 200 14953
+"GET /admin/jsi18n/ HTTP/1.1" 200 12738
+"POST /admin/accounts/usermessage/ HTTP/1.1" 200 9760
+"GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+"POST /admin/accounts/usermessage/ HTTP/1.1" 302 0
+"GET /admin/accounts/usermessage/ HTTP/1.1" 200 12433
+"GET /admin/jsi18n/ HTTP/1.1" 200 12738
+"GET /admin/accounts/contactmessage/ HTTP/1.1" 200 14622
+"GET /admin/jsi18n/ HTTP/1.1" 200 12738
+"POST /admin/accounts/contactmessage/ HTTP/1.1" 200 9753
+"POST /admin/accounts/contactmessage/ HTTP/1.1" 302 0
+"GET /admin/accounts/contactmessage/ HTTP/1.1" 200 12156
+"GET /admin/jsi18n/ HTTP/1.1" 200 12738
+"GET /admin/accounts/contactmessage/ HTTP/1.1" 200 11991
+"GET /admin/jsi18n/ HTTP/1.1" 200 12738
+"GET /admin/ HTTP/1.1" 200 10426
+"GET /admin/ HTTP/1.1" 200 10426
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/rtl.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive_rtl.css HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 7186
+"GET /accounts/dashboard/ HTTP/1.1" 200 7961
+"GET /accounts/admin/users/ HTTP/1.1" 500 223443
+"GET /accounts/admin/users/ HTTP/1.1" 200 18537
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/admin/users/2/update-type/ HTTP/1.1" 200 8147
+"GET /accounts/admin/users/2/ HTTP/1.1" 200 13996
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+Internal Server Error: /accounts/send-message/2/
+Traceback (most recent call last):
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py", line 408, in send_message_to_user_view
+    if request.original_message:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'original_message'
+"GET /accounts/send-message/2/ HTTP/1.1" 500 76636
+Internal Server Error: /accounts/send-message/2/
+Traceback (most recent call last):
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py", line 408, in send_message_to_user_view
+    if request.original_message:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'original_message'
+"GET /accounts/send-message/2/ HTTP/1.1" 500 76636
+"GET /accounts/admin/users/ HTTP/1.1" 200 18537
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/send-private-message/ HTTP/1.1" 200 9544
+"GET /captcha/image/f0122548781c5d66475316c621b680ab4f3efe9a/ HTTP/1.1" 200 4377
+"GET / HTTP/1.1" 200 7186
+"GET /accounts/dashboard/ HTTP/1.1" 200 7961
+Internal Server Error: /accounts/send-message/
+Traceback (most recent call last):
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py", line 408, in send_message_to_user_view
+    if request.original_message:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'original_message'
+"GET /accounts/send-message/ HTTP/1.1" 500 76465
+Not Found: /accounts/
+"GET /accounts/ HTTP/1.1" 404 8618
+"GET / HTTP/1.1" 200 7186
+"GET /accounts/dashboard/ HTTP/1.1" 200 7805
+"GET /accounts/messages/ HTTP/1.1" 200 12842
+"GET /accounts/dashboard/ HTTP/1.1" 200 7805
+"GET /accounts/admin/users/ HTTP/1.1" 200 18537
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /accounts/send-message/2/
+Traceback (most recent call last):
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "F:\programming\sell_pool_ticket\sell_pool_ticket\accounts\views.py", line 408, in send_message_to_user_view
+    if request.original_message:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'original_message'
+"GET /accounts/send-message/2/ HTTP/1.1" 500 76634
+"GET /accounts/admin/users/2/view-document/ HTTP/1.1" 200 53655
+"GET /accounts/profile/ HTTP/1.1" 200 16777
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"POST /accounts/profile/ HTTP/1.1" 302 0
+"GET /accounts/profile/ HTTP/1.1" 200 17114
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196
+"POST /accounts/profile/ HTTP/1.1" 302 0
+"GET /accounts/profile/ HTTP/1.1" 200 17124
+Not Found: /media/profile_images/default_profile.png
+"GET /media/profile_images/default_profile.png HTTP/1.1" 404 3196

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ارسال پیام به کاربر{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">ارسال پیام به کاربر</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">انتخاب کاربر:</label>
+                        <select name="user" class="form-select" id="user-select">
+                            <option value="">-- انتخاب کاربر --</option>
+                            {% for u in users %}
+                            <option value="{{ u.id }}" {% if selected_user and selected_user.id == u.id %}selected{% endif %}>
+                                {{ u.get_full_name }} ({{ u.email }}) - {{ u.national_code }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">یا پاسخ به پیام:</label>
+                        <select name="contact_message_id" class="form-select" id="message-select">
+                            <option value="">-- انتخاب پیام برای پاسخ --</option>
+                            {% for msg in pending_messages %}
+                            <option value="{{ msg.id }}" data-user="{{ msg.user.id }}">
+                                {{ msg.user.get_full_name }}: {{ msg.subject|truncatechars:50 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_subject" class="form-label">موضوع:</label>
+                        <input type="text" name="subject" id="id_subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_content" class="form-label">متن پیام:</label>
+                        <textarea name="content" id="id_content" class="form-control" rows="6" required></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary">لغو</a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-send"></i> ارسال پیام
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">راهنما</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>دو روش برای ارسال پیام:</strong></p>
+                <ol>
+                    <li>مستقیماً یک کاربر را انتخاب کنید</li>
+                    <li>یا به یکی از پیام‌های در انتظار پاسخ دهید</li>
+                </ol>
+                <p class="text-muted small">
+                    <i class="bi bi-info-circle"></i>
+                    پیام ارسالی در بخش "پیام‌های من" کاربر نمایش داده می‌شود.
+                </p>
+            </div>
+        </div>
+        
+        <div class="card shadow mt-3">
+            <div class="card-header bg-warning text-white">
+                <h6 class="mb-0">پیام‌های در انتظار پاسخ</h6>
+            </div>
+            <div class="card-body">
+                {% if pending_messages %}
+                <div class="list-group">
+                    {% for msg in pending_messages %}
+                    <div class="list-group-item">
+                        <small class="text-muted">{{ msg.user.get_full_name }}</small>
+                        <p class="mb-1">{{ msg.subject|truncatechars:40 }}</p>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-1"
+                                onclick="selectMessage('{{ msg.id }}', '{{ msg.user.id }}', 'پاسخ: {{ msg.subject }}')">
+                            انتخاب برای پاسخ
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted">هیچ پیام در انتظار پاسخ وجود ندارد</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectMessage(messageId, userId, subject) {
+        document.getElementById('message-select').value = messageId;
+        document.getElementById('user-select').value = userId;
+        document.getElementById('id_subject').value = subject;
+        
+        // اسکرول به بالا
+        document.getElementById('id_subject').focus();
+    }
+    
+    document.getElementById('message-select').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.value) {
+            const userId = selectedOption.getAttribute('data-user');
+            document.getElementById('user-select').value = userId;
+            document.getElementById('id_subject').value = 'پاسخ: ' + selectedOption.textContent;
+        }
+    });
+    
+    document.getElementById('user-select').addEventListener('change', function() {
+        if (this.value) {
+            document.getElementById('message-select').value = '';
+        }
+    });
+</script>
+{% endblock %}

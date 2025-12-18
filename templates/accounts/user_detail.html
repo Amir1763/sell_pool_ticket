@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+
+{% block title %}جزئیات کاربر{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-person"></i> جزئیات کاربر</h2>
+            <a href="{% url 'user_management' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-right"></i> بازگشت
+            </a>
+        </div>
+        
+        <div class="row">
+            <!-- اطلاعات اصلی کاربر -->
+            <div class="col-md-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">اطلاعات کاربر</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- عکس پروفایل -->
+                        <div class="mb-3">
+                            {% if target_user.profile_image %}
+                            <img src="{{ target_user.profile_image.url }}" 
+                                 alt="{{ target_user.get_full_name }}" 
+                                 class="rounded-circle img-thumbnail"
+                                 style="width: 150px; height: 150px; object-fit: cover;">
+                            {% else %}
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto"
+                                 style="width: 150px; height: 150px; font-size: 48px; font-weight: bold;">
+                                {{ target_user.first_name|first|upper }}{{ target_user.last_name|first|upper }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <h4>{{ target_user.get_full_name }}</h4>
+                        <p class="text-muted">@{{ target_user.username }}</p>
+                        
+                        <!-- وضعیت کاربر -->
+                        <div class="mb-3">
+                            {% if target_user.is_active %}
+                            <span class="badge bg-success">فعال</span>
+                            {% else %}
+                            <span class="badge bg-danger">غیرفعال</span>
+                            {% endif %}
+                            
+                            {% if target_user.is_staff %}
+                            <span class="badge bg-dark">ادمین</span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- نوع کاربر -->
+                        <div class="mb-3">
+                            <strong>نوع کاربر:</strong>
+                            {% if target_user.user_type == 'normal' %}
+                            <span class="badge bg-success">{{ target_user.get_user_type_display }}</span>
+                            {% elif target_user.user_type == 'worker' %}
+                            <span class="badge bg-warning">{{ target_user.get_user_type_display }}</span>
+                            {% elif target_user.user_type == 'employee' %}
+                            <span class="badge bg-danger">{{ target_user.get_user_type_display }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مستند شغلی -->
+                <div class="card shadow">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">مستند شغلی</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if target_user.job_document %}
+                        <div class="text-center">
+                            <i class="bi bi-file-earmark-text display-4 text-info"></i>
+                            <h6 class="mt-3">{{ target_user.job_document.name|slice:"-20:" }}</h6>
+                            <div class="btn-group mt-3" role="group">
+                                <a href="{% url 'view_job_document' target_user.id %}" 
+                                   class="btn btn-outline-info" target="_blank">
+                                    <i class="bi bi-eye"></i> مشاهده
+                                </a>
+                                <a href="{% url 'download_job_document' target_user.id %}" 
+                                   class="btn btn-outline-primary">
+                                    <i class="bi bi-download"></i> دانلود
+                                </a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-file-earmark-x display-4"></i>
+                            <p class="mt-3">مستند شغلی آپلود نشده است</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- اطلاعات تکمیلی -->
+            <div class="col-md-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">اطلاعات شخصی</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-envelope"></i> ایمیل:</strong>
+                                    <p class="mb-0">{{ target_user.email }}</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-credit-card"></i> کد ملی:</strong>
+                                    <p class="mb-0">{{ target_user.national_code }}</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-people"></i> گروه سنی:</strong>
+                                    <p class="mb-0">{{ target_user.get_age_group_display_name }}</p>
+                                </div>
+                                
+                                {% if target_user.birth_date %}
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-calendar"></i> تاریخ تولد:</strong>
+                                    <p class="mb-0">{{ target_user.birth_date|to_jalali }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {% if target_user.phone_number %}
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-phone"></i> شماره موبایل:</strong>
+                                    <p class="mb-0">{{ target_user.phone_number }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if target_user.website %}
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-globe"></i> وبسایت:</strong>
+                                    <p class="mb-0">
+                                        <a href="{{ target_user.website }}" target="_blank">{{ target_user.website }}</a>
+                                    </p>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-clock-history"></i> تاریخ عضویت:</strong>
+                                    <p class="mb-0">{{ target_user.date_joined|to_jalali }}</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong><i class="bi bi-box-arrow-in-right"></i> آخرین ورود:</strong>
+                                    <p class="mb-0">
+                                        {% if target_user.last_login %}
+                                        {{ target_user.last_login|to_jalali }}
+                                        {% else %}
+                                        هنوز وارد نشده
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if target_user.address %}
+                        <div class="mb-3">
+                            <strong><i class="bi bi-geo-alt"></i> آدرس:</strong>
+                            <p class="mb-0">{{ target_user.address }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        {% if target_user.bio %}
+                        <div class="mb-3">
+                            <strong><i class="bi bi-info-circle"></i> درباره کاربر:</strong>
+                            <p class="mb-0">{{ target_user.bio }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- دکمه‌های عملیات -->
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-white">
+                        <h5 class="mb-0">عملیات مدیریت</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <a href="{% url 'update_user_type' target_user.id %}" class="btn btn-warning w-100">
+                                    <i class="bi bi-pencil"></i> تغییر نوع کاربر
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <a href="{% url 'send_message_to_user' target_user.id %}" class="btn btn-primary w-100">
+                                    <i class="bi bi-envelope"></i> ارسال پیام
+                                </a>
+                            </div>
+                            {% if target_user != request.user %}
+                            <div class="col-md-4 mb-3">
+                                <a href="{% url 'toggle_user_status' target_user.id %}" 
+                                   class="btn btn-{% if target_user.is_active %}danger{% else %}success{% endif %} w-100"
+                                   onclick="return confirm('آیا مطمئن هستید؟')">
+                                    <i class="bi bi-{% if target_user.is_active %}x-circle{% else %}check-circle{% endif %}"></i>
+                                    {% if target_user.is_active %}غیرفعال کردن{% else %}فعال کردن{% endif %}
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- پیام‌های کاربر -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">آخرین پیام‌های کاربر</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user_messages %}
+                        <div class="list-group">
+                            {% for msg in user_messages %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ msg.subject }}</h6>
+                                    <small>{{ msg.created_at|to_jalali }}</small>
+                                </div>
+                                <p class="mb-1">{{ msg.content|truncatechars:80 }}</p>
+                                <small>
+                                    {% if msg.is_from_admin %}
+                                    <span class="badge bg-danger">از ادمین</span>
+                                    {% else %}
+                                    <span class="badge bg-primary">از کاربر</span>
+                                    {% endif %}
+                                </small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center py-3">هیچ پیامی یافت نشد</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">آخرین پیام‌های تماس</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if contact_messages %}
+                        <div class="list-group">
+                            {% for msg in contact_messages %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ msg.subject }}</h6>
+                                    <small>{{ msg.created_at|to_jalali }}</small>
+                                </div>
+                                <p class="mb-1">{{ msg.message|truncatechars:80 }}</p>
+                                <small>
+                                    {% if msg.status == 'pending' %}
+                                    <span class="badge bg-warning">در انتظار</span>
+                                    {% elif msg.status == 'read' %}
+                                    <span class="badge bg-info">خوانده شده</span>
+                                    {% elif msg.status == 'replied' %}
+                                    <span class="badge bg-success">پاسخ داده شده</span>
+                                    {% endif %}
+                                </small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center py-3">هیچ پیام تماسی یافت نشد</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

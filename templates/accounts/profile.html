@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+{% block title %}پروفایل{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow sticky-top" style="top: 20px;">
+            <div class="card-body text-center">
+                <!-- عکس پروفایل -->
+                <div class="profile-image-container mb-4">
+                    {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" 
+                             alt="عکس پروفایل {{ user.get_full_name }}" 
+                             class="rounded-circle img-thumbnail" 
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                    {% else %}
+                        <div class="default-profile-image rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                             style="width: 150px; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 60px;">
+                            {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <h4 class="card-title">{{ user.get_full_name }}</h4>
+                <p class="text-muted">@{{ user.username }}</p>
+                
+                <!-- اطلاعات کاربر -->
+                <div class="user-info mt-4 text-start">
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-envelope"></i> ایمیل:</strong>
+                        <p class="mb-0">{{ user.email }}</p>
+                    </div>
+                    
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-credit-card"></i> کد ملی:</strong>
+                        <p class="mb-0">{{ user.national_code }}</p>
+                    </div>
+                    
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-person-badge"></i> نوع کاربر:</strong>
+                        <p class="mb-0">{{ user.get_user_type_display_name }}</p>
+                    </div>
+                    
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-people"></i> گروه سنی:</strong>
+                        <p class="mb-0">{{ user.get_age_group_display_name }}</p>
+                    </div>
+                    
+                    {% if user.phone_number %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-phone"></i> موبایل:</strong>
+                        <p class="mb-0">{{ user.phone_number }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if user.birth_date %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-calendar"></i> تاریخ تولد:</strong>
+                        <p class="mb-0">{{ user.birth_date|to_jalali }}</p>
+                    </div>
+                    
+                    {% if user.calculate_age %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-cake"></i> سن:</strong>
+                        <p class="mb-0">{{ user.calculate_age }} سال</p>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    
+                    {% if user.address %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-geo-alt"></i> آدرس:</strong>
+                        <p class="mb-0">{{ user.address|truncatechars:50 }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if user.bio %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-info-circle"></i> درباره من:</strong>
+                        <p class="mb-0">{{ user.bio|truncatechars:100 }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if user.website %}
+                    <div class="info-item mb-3">
+                        <strong><i class="bi bi-globe"></i> وبسایت:</strong>
+                        <p class="mb-0">
+                            <a href="{{ user.website }}" target="_blank" class="text-decoration-none">
+                                {{ user.website|truncatechars:30 }}
+                            </a>
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mt-4">
+                    <p class="text-muted small">
+                        <i class="bi bi-clock-history"></i>
+                        عضو شده در: {{ user.date_joined|to_jalali }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-pencil-square"></i> ویرایش اطلاعات پروفایل</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>خطا!</strong> لطفا موارد زیر را اصلاح کنید:
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="row">
+                        <!-- ستون اول -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">نام:</label>
+                                {{ form.first_name }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی:</label>
+                                {{ form.last_name }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل:</label>
+                                {{ form.email }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.phone_number.id_for_label }}" class="form-label">شماره موبایل:</label>
+                                {{ form.phone_number }}
+                                <small class="form-text text-muted">فرمت: ۰۹۱۲۳۴۵۶۷۸۹</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.birth_date.id_for_label }}" class="form-label">تاریخ تولد:</label>
+                                {{ form.birth_date }}
+                            </div>
+                        </div>
+                        
+                        <!-- ستون دوم -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.age_group.id_for_label }}" class="form-label">گروه سنی:</label>
+                                {{ form.age_group }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.profile_image.id_for_label }}" class="form-label">عکس پروفایل:</label>
+                                {{ form.profile_image }}
+                                <small class="form-text text-muted">فرمت‌های مجاز: jpg, jpeg, png, gif</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.website.id_for_label }}" class="form-label">وبسایت:</label>
+                                {{ form.website }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.job_document.id_for_label }}" class="form-label">مستند شغلی:</label>
+                                {{ form.job_document }}
+                                {% if user.job_document %}
+                                <div class="mt-2">
+                                    <a href="{{ user.job_document.url }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-file-earmark"></i> مشاهده مستند فعلی
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <small class="form-text text-muted">فرمت‌های مجاز: pdf, doc, docx, jpg, jpeg, png</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="{{ form.address.id_for_label }}" class="form-label">آدرس:</label>
+                                {{ form.address }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.bio.id_for_label }}" class="form-label">درباره من:</label>
+                                {{ form.bio }}
+                                <small class="form-text text-muted">حداکثر ۵۰۰ کاراکتر</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-save"></i> ذخیره تغییرات
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- اطلاعات حساب -->
+        <div class="card shadow mt-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-shield-check"></i> امنیت حساب</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>نام کاربری:</strong> {{ user.username }}</p>
+                        <p><strong>آخرین ورود:</strong> {{ user.last_login|to_jalali }}</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="#" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="bi bi-key"></i> تغییر رمز عبور
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال تغییر رمز عبور -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغییر رمز عبور</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>برای تغییر رمز عبور با مدیر سیستم تماس بگیرید.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-image-container {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .profile-image-container:hover .profile-image-overlay {
+        opacity: 1;
+    }
+    
+    .profile-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        cursor: pointer;
+    }
+    
+    .info-item {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    
+    .default-profile-image {
+        font-weight: bold;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .sticky-top {
+        z-index: 1000;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}تماس با ما{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">تماس با ما</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">اطلاعات تماس</h5>
+                        <p><i class="bi bi-geo-alt"></i> تهران، خیابان ولیعصر، پلاک ۱۲۳۴</p>
+                        <p><i class="bi bi-telephone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                        <p><i class="bi bi-envelope"></i> info@poolticket.com</p>
+                        <p><i class="bi bi-clock"></i> شنبه تا چهارشنبه: ۸ صبح تا ۵ عصر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">فرم تماس</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">ارسال پیام</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

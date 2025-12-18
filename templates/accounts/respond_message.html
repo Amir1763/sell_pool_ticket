@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}پاسخ به پیام{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h2 class="mb-4">پاسخ به پیام کاربر</h2>
+        
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">پیام کاربر</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>فرستنده:</strong>
+                        <p>{{ message.user.get_full_name }} ({{ message.user.email }})</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>تاریخ ارسال:</strong>
+                        <p>{{ message.created_at|date:"Y/m/d - H:i" }}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>موضوع:</strong>
+                    <p class="h5">{{ message.subject }}</p>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>پیام:</strong>
+                    <div class="border p-3 bg-light rounded">
+                        {{ message.message|linebreaks }}
+                    </div>
+                </div>
+                
+                {% if message.admin_response %}
+                <div class="mb-3">
+                    <strong>پاسخ قبلی:</strong>
+                    <div class="border p-3 bg-info bg-opacity-10 rounded">
+                        {{ message.admin_response|linebreaks }}
+                        <small class="text-muted">
+                            {% if message.responded_at %}
+                            پاسخ داده شده در: {{ message.responded_at|date:"Y/m/d - H:i" }}
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">فرم پاسخ</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>خطا!</strong> لطفا موارد زیر را اصلاح کنید:
+                        {{ form.errors }}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.admin_response.id_for_label }}" class="form-label">پاسخ شما:</label>
+                        <textarea name="admin_response" id="id_admin_response" 
+                                class="form-control" rows="6" 
+                                placeholder="پاسخ خود را اینجا بنویسید..."
+                                required>{{ form.admin_response.value|default:'' }}</textarea>
+                        {% if form.admin_response.errors %}
+                        <div class="text-danger">{{ form.admin_response.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-right"></i> بازگشت به داشبورد
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-send-check"></i> ارسال پاسخ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+    }
+    
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
+{% endblock %}

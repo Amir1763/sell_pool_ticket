@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ارسال پیام به ادمین{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-envelope-plus"></i> ارسال پیام به ادمین</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    می‌توانید پیام خصوصی خود را مستقیماً به ادمین سیستم ارسال کنید.
+                    پاسخ ادمین در بخش "پیام‌های من" نمایش داده خواهد شد.
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>خطا!</strong> لطفا موارد زیر را اصلاح کنید:
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.subject.id_for_label }}" class="form-label">موضوع پیام:</label>
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                        <div class="text-danger small">{{ form.subject.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.content.id_for_label }}" class="form-label">متن پیام:</label>
+                        {{ form.content }}
+                        {% if form.content.errors %}
+                        <div class="text-danger small">{{ form.content.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.captcha.id_for_label }}" class="form-label">کد امنیتی:</label>
+                        {{ form.captcha }}
+                        {% if form.captcha.errors %}
+                        <div class="text-danger small">{{ form.captcha.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'my_messages' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-right"></i> بازگشت
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> ارسال پیام
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card shadow mt-4">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">راهنمای ارسال پیام</h6>
+            </div>
+            <div class="card-body">
+                <ul class="mb-0">
+                    <li>موضوع پیام باید واضح و مرتبط با درخواست شما باشد</li>
+                    <li>متن پیام را به طور کامل و واضح بیان کنید</li>
+                    <li>پاسخ ادمین در بخش "پیام‌های من" قابل مشاهده است</li>
+                    <li>می‌توانید از طریق <a href="{% url 'contact' %}">فرم تماس با ما</a> نیز پیام ارسال کنید</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+    }
+</style>
+{% endblock %}

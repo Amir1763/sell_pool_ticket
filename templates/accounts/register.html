@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ثبت‌نام{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h2 class="text-center mb-4">ثبت‌نام در سیستم فروش بلیت استخر</h2>
+        
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <!-- ستون اول - اطلاعات شخصی -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3 border-bottom pb-2">اطلاعات شخصی</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">نام:</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                    <div class="text-danger small">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی:</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                    <div class="text-danger small">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.national_code.id_for_label }}" class="form-label">کد ملی:</label>
+                                {{ form.national_code }}
+                                {% if form.national_code.errors %}
+                                <div class="text-danger small">{{ form.national_code.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.birth_date.id_for_label }}" class="form-label">تاریخ تولد:</label>
+                                {{ form.birth_date }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.age_group.id_for_label }}" class="form-label">گروه سنی:</label>
+                                {{ form.age_group }}
+                                <small class="form-text text-muted">
+                                    اگر تاریخ تولد را وارد کنید، گروه سنی به صورت خودکار محاسبه می‌شود
+                                </small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.profile_image.id_for_label }}" class="form-label">عکس پروفایل (اختیاری):</label>
+                                {{ form.profile_image }}
+                            </div>
+                        </div>
+                        
+                        <!-- ستون دوم - اطلاعات حساب -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3 border-bottom pb-2">اطلاعات حساب</h5>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری:</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                <div class="text-danger small">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل:</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="text-danger small">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">رمز عبور:</label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.errors %}
+                                    <div class="text-danger small">{{ form.password1.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">تکرار رمز عبور:</label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.errors %}
+                                    <div class="text-danger small">{{ form.password2.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.phone_number.id_for_label }}" class="form-label">شماره موبایل (اختیاری):</label>
+                                {{ form.phone_number }}
+                                {% if form.phone_number.errors %}
+                                <div class="text-danger small">{{ form.phone_number.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- اطلاعات اختیاری -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5 class="mb-3 border-bottom pb-2">اطلاعات اختیاری</h5>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.address.id_for_label }}" class="form-label">آدرس:</label>
+                            {{ form.address }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.website.id_for_label }}" class="form-label">وبسایت:</label>
+                            {{ form.website }}
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <label for="{{ form.bio.id_for_label }}" class="form-label">درباره من:</label>
+                            {{ form.bio }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.job_document.id_for_label }}" class="form-label">مستند شغلی:</label>
+                            {{ form.job_document }}
+                            <small class="form-text text-muted">
+                                برای کاربران کارگر و کارمند ضروری است
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <!-- کپچا -->
+                    <div class="row mt-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.captcha.id_for_label }}" class="form-label">کد امنیتی:</label>
+                            {{ form.captcha }}
+                            {% if form.captcha.errors %}
+                            <div class="text-danger small">{{ form.captcha.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- دکمه ثبت‌نام -->
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-person-plus"></i> ثبت‌نام
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p>قبلاً حساب دارید؟ <a href="{% url 'login' %}" class="text-decoration-none">وارد شوید</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control {
+        margin-bottom: 5px;
+    }
+    
+    .form-label {
+        font-weight: 500;
+    }
+    
+    .border-bottom {
+        border-color: #667eea !important;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // محاسبه خودکار گروه سنی بر اساس تاریخ تولد
+        const birthDateInput = document.getElementById('{{ form.birth_date.id_for_label }}');
+        const ageGroupSelect = document.getElementById('{{ form.age_group.id_for_label }}');
+        
+        if (birthDateInput && ageGroupSelect) {
+            birthDateInput.addEventListener('change', function() {
+                const birthDate = new Date(this.value);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                
+                // بررسی ماه و روز
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                
+                // تنظیم گروه سنی
+                if (age < 7) {
+                    ageGroupSelect.value = 'under_7';
+                } else if (age >= 7 && age < 15) {
+                    ageGroupSelect.value = '7_15';
+                } else if (age >= 15 && age < 25) {
+                    ageGroupSelect.value = '15_25';
+                } else {
+                    ageGroupSelect.value = 'over_25';
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
